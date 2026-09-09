@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Kuis TKA 2026 - Literasi Bahasa Indonesia</title>
+<style>
+:root{--bg:#f5f7fb;--card:#fff;--text:#172033;--muted:#6b7280;--primary:#6c4df6;--green:#20b26b;--red:#ef476f;--yellow:#ffb703;--blue:#2196f3}
+*{box-sizing:border-box}body{margin:0;font-family:Inter,Segoe UI,Arial,sans-serif;background:linear-gradient(135deg,#5b4cf6,#8b5cf6 45%,#22b8cf);color:var(--text);min-height:100vh}
+.screen{display:none;min-height:100vh;padding:24px}.screen.active{display:flex;align-items:center;justify-content:center}
+.card{background:var(--card);width:min(920px,100%);border-radius:28px;padding:34px;box-shadow:0 20px 60px #0002}
+.hero{text-align:center}.logo{font-size:58px}.hero h1{font-size:clamp(28px,5vw,48px);margin:10px 0 6px}.hero h2{color:var(--primary);margin:0 0 25px}.tag{display:inline-block;background:#eeeaff;color:var(--primary);padding:8px 14px;border-radius:99px;font-weight:700}
+.form{display:grid;gap:14px;max-width:600px;margin:25px auto}.form input{padding:15px 18px;border:2px solid #e6e8ef;border-radius:14px;font-size:16px;outline:none}.form input:focus{border-color:var(--primary)}
+.btn{border:0;border-radius:15px;padding:15px 24px;font-size:17px;font-weight:800;cursor:pointer;transition:.2s}.btn:hover{transform:translateY(-2px)}.primary{background:var(--primary);color:white}.secondary{background:#edf0f7;color:var(--text)}
+.rules{background:#f8f8ff;border-radius:18px;padding:18px;text-align:left;line-height:1.7}.rules strong{color:var(--primary)}
+#quizScreen{padding:0;background:var(--bg);display:none}.quiz-wrap{width:min(1050px,100%);margin:auto;padding:20px}
+.top{display:flex;justify-content:space-between;align-items:center;gap:15px;margin-bottom:14px}.brand{font-weight:900;color:var(--primary)}.counter{font-weight:800}.timer{background:#fff;border-radius:99px;padding:10px 18px;font-weight:900;box-shadow:0 4px 15px #0001}.timer.warn{color:var(--red);animation:pulse .7s infinite alternate}
+@keyframes pulse{to{transform:scale(1.05)}}.progress{height:10px;background:#e3e6ee;border-radius:99px;overflow:hidden;margin-bottom:22px}.bar{height:100%;background:linear-gradient(90deg,var(--primary),#a855f7);width:0;transition:.3s}
+.qcard{background:#fff;border-radius:25px;padding:30px;box-shadow:0 10px 30px #0000000c}.section{color:var(--primary);font-size:13px;font-weight:900;text-transform:uppercase;letter-spacing:.8px}.question{font-size:clamp(21px,3vw,30px);font-weight:800;line-height:1.4;margin:14px 0 25px}.passage{background:#f7f8fc;border-left:5px solid var(--primary);padding:16px;border-radius:12px;line-height:1.65;margin-bottom:18px}
+.options{display:grid;grid-template-columns:1fr 1fr;gap:14px}.opt{display:flex;align-items:center;gap:13px;padding:18px;border:2px solid #e4e7ef;border-radius:17px;background:white;cursor:pointer;font-size:17px;font-weight:650;text-align:left}.opt:hover{border-color:#b8aefc;background:#faf9ff}.opt.selected{border-color:var(--primary);background:#eeeaff}.letter{width:38px;height:38px;border-radius:12px;display:grid;place-items:center;color:white;font-weight:900;flex:none}.a{background:#ef476f}.b{background:#2196f3}.c{background:#20b26b}.d{background:#ff9f1c}.nav{display:flex;justify-content:space-between;margin-top:22px;gap:12px}.nav .btn{min-width:130px}
+.textarea{width:100%;min-height:150px;border:2px solid #e2e5ed;border-radius:15px;padding:15px;font:inherit;resize:vertical}.tf{display:grid;grid-template-columns:1fr 1fr;gap:15px}.tf button{padding:25px;border:3px solid #e5e7ef;background:#fff;border-radius:18px;font-size:20px;font-weight:900;cursor:pointer}.tf button.selected{border-color:var(--primary);background:#eeeaff}
+.result{text-align:center}.score{font-size:76px;font-weight:950;color:var(--primary);margin:8px}.circle{width:170px;height:170px;border-radius:50%;display:grid;place-items:center;margin:15px auto;background:#eeeaff}.result h2{font-size:30px}.summary{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:25px 0}.stat{background:#f7f8fc;border-radius:17px;padding:18px}.stat b{font-size:27px;display:block;color:var(--primary)}.advice{background:#f8f8ff;border-radius:18px;padding:20px;text-align:left;line-height:1.6}.review{text-align:left;margin-top:25px}.review-item{padding:14px;border-radius:13px;background:#f7f8fc;margin:9px 0}.correct{border-left:5px solid var(--green)}.wrong{border-left:5px solid var(--red)}
+@media(max-width:700px){.card{padding:23px;border-radius:22px}.options,.tf,.summary{grid-template-columns:1fr}.qcard{padding:20px}.nav .btn{min-width:0;flex:1}.top{flex-wrap:wrap}}
+</style>
+</head>
+<body>
+
+<section id="startScreen" class="screen active">
+<div class="card hero">
+<div class="logo">🎯</div>
+<span class="tag">KUIS ONLINE TKA 2026</span>
+<h1>Literasi Bahasa Indonesia</h1>
+<h2>50 Soal • Gaya Quizizz / Kahoot</h2>
+<div class="rules">
+<strong>Format Kuis</strong><br>
+30 soal pilihan ganda • 10 soal benar/salah • 10 soal isian/esai singkat<br>
+Nilai otomatis: PG × 2, Benar/Salah × 1,5, Esai × 2,5
+</div>
+<div class="form">
+<input id="name" placeholder="Nama lengkap" autocomplete="name">
+<input id="className" placeholder="Kelas / Rombel">
+<input id="date" type="date">
+<button class="btn primary" onclick="startQuiz()">🚀 Mulai Kuis</button>
+</div>
+<p style="color:#777;font-size:13px">Kerjakan dengan teliti. Jawaban PG dan Benar/Salah dinilai otomatis. Esai dinilai berdasarkan rubrik.</p>
+</div>
+</section>
+
+<section id="quizScreen" class="screen">
+<div class="quiz-wrap">
+<div class="top"><div class="brand">TKA 2026 • LITERASI</div><div class="counter" id="counter"></div><div class="timer" id="timer">30:00</div></div>
+<div class="progress"><div class="bar" id="bar"></div></div>
+<div class="qcard">
+<div class="section" id="section"></div>
+<div id="passage"></div>
+<div class="question" id="question"></div>
+<div id="answerArea"></div>
+<div class="nav"><button class="btn secondary" onclick="prevQ()">← Sebelumnya</button><button class="btn primary" id="nextBtn" onclick="nextQ()">Berikutnya →</button></div>
+</div>
+</div>
+</section>
+
+<section id="resultScreen" class="screen">
+<div class="card result">
+<div class="logo">🏆</div><span class="tag">HASIL KUIS</span>
+<h1 id="resultName"></h1>
+<div class="circle"><div class="score" id="score"></div></div>
+<h2 id="category"></h2>
+<div class="summary">
+<div class="stat">Pilihan Ganda<b id="pgStat">0/30</b></div>
+<div class="stat">Benar / Salah<b id="tfStat">0/10</b></div>
+<div class="stat">Esai<b id="essayStat">—</b></div>
+</div>
+<div class="advice" id="advice"></div>
+<div class="review" id="review"></div>
+<button class="btn primary" onclick="location.reload()" style="margin-top:20px">🔄 Kerjakan Lagi</button>
+</div>
+</section>
+
+<script>
+const passage=`Transisi menuju energi terbarukan di Indonesia menghadapi tantangan ketergantungan pada energi fosil. Kendati potensi energi surya dan angin sangat melimpah, biaya investasi awal infrastruktur pendukung masih dinilai amat tinggi. Oleh karena itu, skema insentif dan regulasi yang jelas sangat diperlukan guna menarik minat investor swasta.`;
+
+const questions=[
+{type:"pg",q:"Apa ide pokok wacana tentang transisi energi terbarukan di Indonesia?",o:["Potensi energi surya dan angin di Indonesia.","Tantangan dan kebutuhan insentif dalam transisi energi terbarukan.","Penyebab utama tingginya biaya investasi energi fosil.","Peran investor swasta dalam mengelola energi surya.","Regulasi pemerintah terkait penghapusan energi fosil."],a:1,p:passage},
+{type:"pg",q:"Kata \"regulasi\" dalam wacana tersebut bermakna...",o:["Peraturan atau kaidah yang dibuat untuk mengatur.","Perencanaan modal investasi swasta.","Proses pembuatan infrastruktur baru.","Penyesuaian harga energi di pasar.","Perubahan struktur organisasi pemerintahan."],a:0,p:passage},
+{type:"pg",q:"Pernyataan yang sesuai dengan isi wacana tersebut adalah...",o:["Energi fosil di Indonesia sudah habis sepenuhnya.","Investasi awal energi terbarukan relatif murah.","Indonesia memiliki potensi energi surya dan angin yang melimpah.","Investor swasta tidak lagi tertarik berinvestasi di Indonesia.","Regulasi saat ini sudah sangat memadai bagi investor."],a:2,p:passage},
+{type:"pg",q:"Penulisan kata bercetak miring yang sesuai EYD terdapat pada kalimat...",o:["Dokter meresepkan obat di apotik terdekat.","Peneliti sedang melakukan analisis data di laboratorium.","Kegiatan praktek lapangan ditunda minggu depan.","Sistem itu membutuhkan standarisasi internasional.","Kita harus menjaga kualitet produk lokal."],a:1},
+{type:"pg",q:"Manakah kalimat berikut yang merupakan FAKTA?",o:["Pemandangan danau tersebut sangat indah memanjakan mata.","Indonesia memproklamasikan kemerdekaan pada 17 Agustus 1945.","Kopi merupakan minuman terenak untuk menemani belajar.","Pelajaran Matematika jauh lebih menarik daripada Bahasa Indonesia.","Baju berwarna biru terlihat lebih cocok untuknya."],a:1},
+{type:"pg",q:"Manakah kalimat yang menggunakan bentuk EFEKTIF?",o:["Bagi para siswa-siswa sekalian diharapkan hadir tepat waktu.","Rapat itu membahas daripada evaluasi anggaran tahunan.","Ia menyusun laporan keuangan tersebut dengan sangat teliti.","Demi untuk menghemat waktu, acara kita percepat saja.","Pembicara yang mana baru naik ke atas panggung adalah penyair."],a:2},
+{type:"pg",q:"Penggunaan tanda baca koma yang BENAR terdapat pada kalimat...",o:["Ibu membeli apel, jeruk, dan mangga di pasar.","Dia tidak masuk sekolah, karena sakit demam.","Meskipun hujan lebat, dia tetap berangkat, ke kantor.","Ayah mengatakan, bahwa kita akan berlibur besok.","Bandung, 10, Oktober 2026."],a:0},
+{type:"pg",q:"Ciri utama dari teks prosedur adalah menggunakan kalimat...",o:["Perbandingan dan pengandaian","Imperatif (perintah) dan persuasif","Deskriptif dan kiasan","Tanya dan ambigu","Naratif dan fiksi"],a:1},
+{type:"pg",q:"Antonim dari kata \"konsekuen\" adalah...",o:["Konsisten","Insubordinasi","Inkonstan","Logis","Komitmen"],a:2},
+{type:"pg",q:"Penggunaan kata hubung kausalitas terdapat pada kalimat...",o:["Budi membaca buku saat adik sedang tidur.","Ia terlambat tiba di sekolah sebab ban sepedanya bocor.","Sintia bingung memilih antara baju merah atau biru.","Selain pintar, dia juga dikenal sangat ramah.","Kiki pergi ke perpustakaan, lalu kembali ke kelas."],a:1},
+{type:"pg",q:"Teks yang bertujuan meyakinkan pembaca dengan menyertakan alasan dan data pendukung disebut teks...",o:["Eksplanasi","Deskripsi","Argumentasi","Narasi","Prosedur"],a:2},
+{type:"pg",q:"Gagasan utama paragraf yang terletak di akhir paragraf disebut pola...",o:["Deduktif","Induktif","Campuran","Deskriptif","Naratif"],a:1},
+{type:"pg",q:"Kata berimbuhan yang menyatakan proses membuat sesuatu jadi terdapat pada...",o:["Pemukiman","Pembatalan","Peminat","Pembaca","Pelukis"],a:1},
+{type:"pg",q:"Makna lugas (denotatif) dari ungkapan \"panjang tangan\" adalah...",o:["Suka mencuri","Suka membantu","Memiliki ukuran tangan yang panjang","Suka memberi hadiah","Jarang bekerja"],a:2},
+{type:"pg",q:"Kalimat yang mengandung opini adalah...",o:["Air membeku pada suhu 0 derajat Celsius.","Jakarta adalah ibu kota negara Indonesia.","Masakan buatan ibu merupakan masakan paling lezat di dunia.","Planet Bumi mengelilingi Matahari.","Candi Borobudur terletak di Provinsi Jawa Tengah."],a:2},
+{type:"pg",q:"Kesalahan pada kalimat \"Anak itu sangat rajin sekali membaca buku.\" terjadi karena...",o:["Kurangnya tanda baca koma.","Pemborosan kata sangat dan sekali dipakai bersamaan.","Penggunaan kata anak yang harus diganti.","Subjek tidak jelas.","Penulisan kata membaca yang tidak baku."],a:1},
+{type:"pg",q:"Teks yang memuat penjelasan proses terjadinya fenomena alam atau sosial secara bertahap disebut...",o:["Teks Anekdot","Teks Eksplanasi","Teks Cerpen","Teks Laporan Hasil Observasi","Teks Persuasi"],a:1},
+{type:"pg",q:"Sinonim dari kata \"signifikan\" adalah...",o:["Sepele","Berarti / Penting","Lambat","Khusus","Sementara"],a:1},
+{type:"pg",q:"Kata yang mengalami perubahan makna meluas (generalisasi) terdapat pada kata...",o:["Bapak","Sarjana","Ibu","Kepala","Papan"],a:0},
+{type:"pg",q:"Penulisan kata depan \"di\" yang BENAR adalah...",o:["dimobil","di perpustakaan","di jual","di makan","di angkut"],a:1},
+{type:"pg",q:"Kalimat yang bermajas personifikasi adalah...",o:["Suaranya menggelegar membelah angkasa.","Nyiur di pantai melambaikan tangannya menyapa angin.","Wajahnya bagaikan rembulan di malam hari.","Ia adalah anak emas di keluarga itu.","Raja siang telah terbit dari ufuk timur."],a:1},
+{type:"pg",q:"Inti cerita atau ringkasan alur dalam karya sastra dinamakan...",o:["Tema","Sinopsis","Amanat","Setting","Latar belakang"],a:1},
+{type:"pg",q:"Kalimat yang tidak sesuai dengan kaidah tata bahasa (kalimat tidak baku) adalah...",o:["Mereka sedang mendiskusikan masalah tersebut.","Dalam rapat itu membicarakan tentang kenaikan harga.","Kami telah menyetujui kesepakatan tersebut.","Siswa kelas XII sedang mengikuti ujian.","Bapak Kepala Sekolah menyerahkan piala."],a:1},
+{type:"pg",q:"Penulisan gabungan kata yang benar sesuai EYD adalah...",o:["Beasiswa","Beda tangan","Tanda tangan","Kerja sama","Semua benar"],a:4},
+{type:"pg",q:"Unsur intrinsik cerpen yang menggambarkan tempat, waktu, dan suasana terjadi cerita adalah...",o:["Alur","Penokohan","Latar / Setting","Tema","Amanat"],a:2},
+{type:"pg",q:"Rangkaian peristiwa yang memiliki hubungan sebab-akibat dalam cerita disebut...",o:["Latar","Tokoh","Alur / Plot","Perwatakan","Judul"],a:2},
+{type:"pg",q:"Kalimat berikut yang mengandung ungkapan (idiom) adalah...",o:["Ia menyimpannya di dalam meja hijau.","Terdakwa itu akhirnya dibawa ke meja hijau.","Meja hijau itu baru saja dicat oleh ayah.","Adik mewarnai gambar dengan spidol hijau.","Ibu membeli taplak meja berwarna hijau."],a:1},
+{type:"pg",q:"Sifat utama dari wacana persuasif adalah...",o:["Menghibur","Membujuk / Mengajak","Memaparkan data tanpa pendapat","Mengkritik secara tajam","Menceritakan rekaan fiksi"],a:1},
+{type:"pg",q:"Manakah pasangan kata berikut yang merupakan antonim?",o:["Adaptasi - Penyesuaian","Akselerasi - Percepatan","Kompak - Padat","Akurat - Meleset","Efektif - Edisi"],a:3},
+{type:"pg",q:"Tanda baca yang digunakan untuk mengapit petikan langsung dari pembicaraan adalah...",o:["Tanda kurung ()","Tanda petik ganda “...”","Tanda titik dua :","Tanda hubung -","Tanda petik tunggal ‘...’"],a:1},
+{type:"tf",q:"Kalimat utama selalu berada di awal paragraf (deduktif) dan tidak pernah berada di akhir paragraf.",a:false},
+{type:"tf",q:"Kata dasar hembus jika mendapat imbuhan meng- menjadi menghembuskan (bukan mengembuskan).",a:false},
+{type:"tf",q:"Konjungsi di mana hanya digunakan untuk menanyakan lokasi/tempat, bukan sebagai kata penghubung antarklausa.",a:true},
+{type:"tf",q:"Teks argumentasi harus memuat alasan, fakta, dan bukti yang logis untuk memperkuat pendapat penulis.",a:true},
+{type:"tf",q:"Antonim dari kata kualitatif adalah kuantitatif.",a:true},
+{type:"tf",q:"Kata praktik, apotek, dan analisis merupakan bentuk kata baku sesuai Pedoman Umum Ejaan Bahasa Indonesia (EYD).",a:true},
+{type:"tf",q:"Majas hiperbola adalah gaya bahasa yang membandingkan dua hal secara langsung tanpa kata pembanding.",a:false},
+{type:"tf",q:"Watak atau karakter tokoh cerita tergolong sebagai unsur ekstrinsik karya sastra.",a:false},
+{type:"tf",q:"Kalimat pasif ditandai dengan predikat yang menggunakan imbuhan di- atau ter-.",a:true},
+{type:"tf",q:"Ringkasan teks harus tetap mempertahankan urutan isi dan sudut pandang karangan aslinya.",a:true},
+{type:"essay",q:"Jelaskan perbedaan utama antara FAKTA dan OPINI dalam sebuah teks bacaan!"},
+{type:"essay",q:"Sunting kalimat berikut agar menjadi kalimat efektif dan baku: “Banyak anak-anak sekolah yang mana terlambat hadir dikarenakan hujan deras.”"},
+{type:"essay",q:"Apakah yang dimaksud dengan Ide Pokok atau Gagasan Utama paragraf?"},
+{type:"essay",q:"Sebutkan 3 unsur intrinsik yang membangun sebuah cerita pendek (cerpen)!"},
+{type:"essay",q:"Berikan 2 contoh kata yang menggunakan imbuhan serapan asing -isasi serta jelaskan maknanya!"},
+{type:"essay",q:"Jelaskan fungsi utama dari konjungsi kausalitas dan tuliskan 2 contoh kata konjungsinya!"},
+{type:"essay",q:"Apakah perbedaan antara majas Simile dan majas Metafora? Berikan satu contoh sederhana dari masing-masing majas!"},
+{type:"essay",q:"Sebutkan struktur umum (generik) yang menyusun sebuah Teks Eksplanasi!"},
+{type:"essay",q:"Jelaskan mengapa penggunaan kata “demi untuk” dalam satu kalimat dianggap tidak efektif!"},
+{type:"essay",q:"Mengapa pemahaman bacaan (reading comprehension) sangat penting dalam menghadapi Tes Kemampuan Akademik (TKA)?"}
+];
+
+let idx=0, answers=new Array(50).fill(null), name="", className="", seconds=1800, interval;
+
+function startQuiz(){
+ name=document.getElementById("name").value.trim()||"Peserta";
+ className=document.getElementById("className").value.trim()||"-";
+ document.getElementById("startScreen").classList.remove("active");
+ document.getElementById("quizScreen").style.display="block";
+ document.getElementById("date").value=new Date().toISOString().slice(0,10);
+ render();
+ interval=setInterval(tick,1000);
+}
+function tick(){seconds--; if(seconds<=0){seconds=0; finish()} let m=Math.floor(seconds/60),s=seconds%60;let el=document.getElementById("timer");el.textContent=`${String(m).padStart(2,"0")}:${String(s).padStart(2,"0")}`;el.classList.toggle("warn",seconds<=60)}
+function render(){
+ const q=questions[idx], total=questions.length;
+ document.getElementById("counter").textContent=`${idx+1} / ${total}`;
+ document.getElementById("bar").style.width=((idx+1)/total*100)+"%";
+ document.getElementById("section").textContent=idx<30?"BAGIAN I • PILIHAN GANDA":idx<40?"BAGIAN II • BENAR / SALAH":"BAGIAN III • ESAI SINGKAT";
+ document.getElementById("passage").innerHTML=q.p?`<div class="passage">📖 ${q.p}</div>`:"";
+ document.getElementById("question").textContent=q.q;
+ const area=document.getElementById("answerArea");
+ if(q.type==="pg"){
+   area.innerHTML=`<div class="options">${q.o.map((x,i)=>`<button class="opt ${answers[idx]===i?"selected":""}" onclick="select(${i})"><span class="letter ${["a","b","c","d","a"][i]}">${String.fromCharCode(65+i)}</span><span>${x}</span></button>`).join("")}</div>`;
+ }else if(q.type==="tf"){
+   area.innerHTML=`<div class="tf"><button class="${answers[idx]===true?"selected":""}" onclick="select(true)">✓ BENAR</button><button class="${answers[idx]===false?"selected":""}" onclick="select(false)">✕ SALAH</button></div>`;
+ }else{
+   area.innerHTML=`<textarea class="textarea" id="essay" placeholder="Ketik jawaban singkat Anda di sini...">${answers[idx]||""}</textarea>`;
+ }
+ document.getElementById("nextBtn").textContent=idx===total-1?"🏁 Selesai":"Berikutnya →";
+}
+function select(v){answers[idx]=v;render()}
+function saveEssay(){if(questions[idx].type==="essay"){const e=document.getElementById("essay");if(e)answers[idx]=e.value}}
+function nextQ(){saveEssay();if(idx<questions.length-1){idx++;render()}else finish()}
+function prevQ(){saveEssay();if(idx>0){idx--;render()}}
+function finish(){
+ saveEssay();clearInterval(interval);
+ let pg=0,tf=0;
+ questions.slice(0,30).forEach((q,i)=>{if(answers[i]===q.a)pg++});
+ questions.slice(30,40).forEach((q,i)=>{if(answers[i+30]===q.a)tf++});
+ // Esai diberi skor sementara 0–25; guru dapat menyesuaikan berdasarkan rubrik.
+ let essayScore=0;
+ questions.slice(40).forEach((q,i)=>{if((answers[i+40]||"").trim().length>=20)essayScore+=2.5});
+ const score=Math.round(pg*2+tf*1.5+essayScore);
+ document.getElementById("quizScreen").style.display="none";document.getElementById("resultScreen").classList.add("active");
+ document.getElementById("resultName").textContent=`${name} • ${className}`;
+ document.getElementById("score").textContent=score;
+ document.getElementById("pgStat").textContent=`${pg}/30`;
+ document.getElementById("tfStat").textContent=`${tf}/10`;
+ document.getElementById("essayStat").textContent=`${essayScore}/25`;
+ let cat,advice;
+ if(score>=85){cat="🌟 SANGAT BAIK";advice="Pemahaman literasi Anda sangat kuat. Pertahankan ketelitian saat membaca wacana panjang dan terus latih soal-soal HOTS."}
+ else if(score>=70){cat="👍 CUKUP / BAIK";advice="Anda menguasai konsep dasar. Tingkatkan ketelitian pada kaidah tata bahasa baku dan analisis bacaan tersirat."}
+ else{cat="📚 PERLU EVALUASI";advice="Perbanyak perbendaharaan kata baku, latihan menemukan gagasan utama, dan membaca wacana secara kritis."}
+ document.getElementById("category").textContent=cat;document.getElementById("advice").innerHTML=`<strong>Saran:</strong> ${advice}<br><br><small>Catatan: penilaian esai otomatis pada versi ini menggunakan indikator panjang jawaban. Untuk penilaian akademik final, guru sebaiknya menggunakan rubrik esai.</small>`;
+ let review="<h3>Ringkasan Jawaban</h3>";
+ questions.slice(0,40).forEach((q,i)=>{let ok=answers[i]===q.a;let chosen=q.type==="pg"?(answers[i]===null?"Belum dijawab":q.o[answers[i]]):(answers[i]===null?"Belum dijawab":answers[i]?"Benar":"Salah");review+=`<div class="review-item ${ok?"correct":"wrong"}"><b>${i+1}. ${ok?"✓":"✕"}</b> ${chosen}</div>`});
+ document.getElementById("review").innerHTML=review;
+}
+</script>
+</body>
+</html>
